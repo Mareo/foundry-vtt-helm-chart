@@ -1,0 +1,27 @@
+# Tools (helm, helm-docs, yamllint) come from the toolbox image: see justfile.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: end-of-file-fixer
+        exclude: ^hugo/themes/|^charts/[^/]+/README\.md$
+      - id: trailing-whitespace
+        exclude: ^hugo/themes/|\.md$
+
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.14.2
+    hooks:
+      - id: helm-docs
+        args: [--chart-search-root=charts]
+
+  - repo: local
+    hooks:
+      - id: helm-lint
+        name: helm lint + template
+        entry: scripts/helm-lint.sh
+        language: script
+        files: ^charts/
+        pass_filenames: true

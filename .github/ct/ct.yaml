@@ -1,6 +1,8 @@
 remote: origin
+target-branch: main
 chart-dirs:
   - charts
+chart-yaml-schema: .github/ct/chart_schema.yaml
+lint-conf: .github/ct/lintconf.yaml
 helm-extra-args: --timeout 900s
-target-branch: main
 validate-maintainers: false
