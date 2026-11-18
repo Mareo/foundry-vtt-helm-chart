@@ -18,6 +18,7 @@ ARG HELM_DOCS_VERSION=1.14.2
 ARG HUGO_VERSION=0.170.1
 ARG ORAS_VERSION=1.4.0
 ARG COSIGN_VERSION=3.1.4
+ARG GH_VERSION=2.105.0
 # helm plugins
 ARG HELM_UNITTEST_VERSION=1.2.1
 # pipx (global: /opt/pipx, bins in /usr/local/bin, so the host user finds
@@ -48,6 +49,8 @@ RUN set -eux; \
       | tar -xz hugo; \
     curl -fsSL https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_amd64.tar.gz \
       | tar -xz oras; \
+    curl -fsSL https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz \
+      | tar -xz --strip-components=2 gh_${GH_VERSION}_linux_amd64/bin/gh; \
     # ct needs its default config (chart_schema.yaml, lintconf.yaml) in /etc/ct
     mkdir -p /etc/ct; \
     curl -fsSL https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz \

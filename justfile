@@ -22,6 +22,9 @@ toolbox:
     distrobox create -Y -n {{ box }} -i {{ image }}
     # kind talks to the host podman through distrobox-host-exec
     distrobox enter -n {{ box }} -- sudo ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman
+    # Only gh is exported: helm/kubectl on the host may belong to other toolboxes
+    rm -f ~/.local/bin/gh
+    distrobox enter -n {{ box }} -- distrobox-export --bin /usr/local/bin/gh --export-path ~/.local/bin
     # helm plugins live in $HOME, shared with the host
     {{ tb }} helm plugin list | grep -q '^unittest' \
         || {{ tb }} helm plugin install --verify=false https://github.com/helm-unittest/helm-unittest
