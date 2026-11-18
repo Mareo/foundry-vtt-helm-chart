@@ -1,0 +1,22 @@
+{
+    "name": "mahahe-helm",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "updateRemoteUserUID": true,
+    "mounts": [
+        "source=${localEnv:HOME}/.kube,target=/home/vscode/.kube,type=bind"
+    ],
+    "postCreateCommand": "just hooks",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "redhat.vscode-yaml",
+                "nefrob.vscode-just-syntax",
+                "budparr.language-hugo-vscode"
+            ]
+        }
+    }
+}
